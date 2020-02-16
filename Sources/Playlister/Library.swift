@@ -32,4 +32,8 @@ struct Library {
             }
         }
     }
+    
+    func findPlaylist(named: String) -> Playlist? {
+        playlists.compactMap { $0.findPlaylist(named: named) }.first
+    }
 }

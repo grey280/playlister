@@ -41,4 +41,11 @@ class Playlist: Identifiable {
     func findParent(_ of: ITLibPlaylist) -> Playlist? {
         findParent(of.persistentID)
     }
+    
+    func findPlaylist(named: String) -> Playlist? {
+        if (named == name){
+            return self
+        }
+        return children.compactMap { $0.findPlaylist(named: named) }.first
+    }
 }
