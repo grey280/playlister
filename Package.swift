@@ -17,6 +17,9 @@ let package = Package(
         .target(
             name: "Playlister",
             dependencies: ["SwiftCLI"],
+            linkerSettings: [
+                .linkedFramework("iTunesLibrary")
+            ]),
         .testTarget(
             name: "PlaylisterTests",
             dependencies: ["Playlister"]),
