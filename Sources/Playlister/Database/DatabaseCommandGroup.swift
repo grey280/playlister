@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import SwiftCLI
+
+class DatabaseCommandGroup: CommandGroup {
+    let children: [Routable] = []
+    
+    var shortDescription: String = "Manage the links database"
+    
+    let name = "db"
+}
