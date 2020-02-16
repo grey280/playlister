@@ -13,7 +13,27 @@ class MarkdownCommand: Command {
     @Key("-m", "--message", description: "Message to use when committing to Git repository.") var gitMessage: String?
     
     func execute() throws {
-        // TODO: Implement
+        let library = try Library()
+        let filemanager = FileManager.default
+        let inp = PipeStream()
+        let outp = PipeStream()
+        let gitInit = Task(executable: "git", arguments: ["init"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
+        gitInit.runSync()
+        let gitClear = Task(executable: "git", arguments: ["rm", "-rf", "."], directory: path, stdout: inp, stderr: stderr, stdin: outp)
+        gitClear.runSync()
+        let gitClean = Task(executable: "git", arguments: ["clean", "-fxd"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
+        gitClean.runSync()
+        
+        for playlist in library.playlists {
+            playlist.printPlaylist(in: path, with: filemanager)
+        }
+        
+        let gitAdd = Task(executable: "git", arguments: ["add", "."], directory: path, stdout: outp, stderr: stderr, stdin: inp)
+        gitAdd.runSync()
+        let gitCommit = Task(executable: "git", arguments: ["commit", "-m", gitMessage ?? "Automated update"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
+        gitCommit.runSync()
+        let gitPush = Task(executable: "git", arguments: ["push"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
+        gitPush.runSync()
     }
 }
 
