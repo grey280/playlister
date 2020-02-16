@@ -9,7 +9,9 @@ class MarkdownCommand: Command {
     
     @Flag("-r", "--ratings", description: "Include star ratings") var includeRatings: Bool
     
-    @Param var outputPath: String
+    @Key("-o", "--output", description: "Output directory; defaults to current directory") var outputPath: String?
+    
+    @Key("-n", "--name", description: "Output file name; defaults to the name of the selected playlist") var outputName: String?
     
     func execute() throws {
         let library = try Library()
