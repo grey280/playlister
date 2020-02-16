@@ -8,6 +8,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_13)
     ],
+    products: [
+        .executable(name: "playlister", targets: ["Playlister"])
+    ],
     dependencies: [
         .package(url: "https://github.com/jakeheis/SwiftCLI", from: "6.0.0")
     ],
