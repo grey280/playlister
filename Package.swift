@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Playlister",
+    platforms: [
+        .macOS(.v10_13)
+    ],
     dependencies: [
         .package(url: "https://github.com/jakeheis/SwiftCLI", from: "6.0.0")
     ],
@@ -13,7 +16,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Playlister",
-            dependencies: ["SwiftCLI"]),
+            dependencies: ["SwiftCLI"],
+            linkerSettings: [.linkedFramework("iTunesLibrary")]),
         .testTarget(
             name: "PlaylisterTests",
             dependencies: ["Playlister"]),
