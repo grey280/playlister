@@ -1,4 +1,5 @@
 import SwiftCLI
+import Foundation
 
 class MarkdownCommand: Command {
     let name = "md"
@@ -23,7 +24,7 @@ fileprivate extension String{
 }
 
 fileprivate extension Playlist {
-    func asMarkdown(includeRating: Bool = false) -> String? {
+    func asMarkdown(includeRating: Bool) -> String? {
         if isParent {
             return nil
         }
@@ -58,5 +59,46 @@ fileprivate extension Playlist {
             
         }).joined(separator: "\n\n")
         return "# \(name)\n\n\(body)\n"
+    }
+    
+    func printPlaylist(in path: String, with filemanager: FileManager, includeRating: Bool = false){
+        if isParent{
+            // create directory and recurse
+            let newPath = "\(path)/\(name)"
+            if (!filemanager.fileExists(atPath: newPath)){
+                do {
+                    try filemanager.createDirectory(atPath: newPath, withIntermediateDirectories: false, attributes: nil)
+                } catch {
+                    FileHandle.standardError.write("Error: failed to create directory \(newPath)".data(using: .utf8)!)
+                    exit(1)
+                }
+            }
+            for child in children{
+                child.printPlaylist(in: newPath, with: filemanager)
+            }
+        } else {
+            // print the playlist!
+            let newFileName = "\(path)/\(name).md"
+            if (filemanager.fileExists(atPath: newFileName)){
+                print("Removing file \(newFileName) for overwriting")
+                do{
+                    try filemanager.removeItem(atPath: newFileName)
+                }catch let error{
+                    FileHandle.standardError.write("Error: failed to remove file \(newFileName)".data(using: .utf8)!);
+                    FileHandle.standardError.write(error.localizedDescription.data(using: .utf8)!)
+                    exit(1)
+                }
+            }
+            // build the file contents
+            guard let body = asMarkdown(includeRating: includeRating) else {
+                FileHandle.standardError.write("Error: failed to build playlist descriptor \(newFileName)".data(using: .utf8)!);
+                exit(1)
+            }
+            //   write to the file
+            guard filemanager.createFile(atPath: newFileName, contents: body.data(using: .utf8)!, attributes: nil) else{
+                FileHandle.standardError.write("Error: failed to write file \(newFileName)".data(using: .utf8)!);
+                exit(1)
+            }
+        }
     }
 }
