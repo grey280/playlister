@@ -5,8 +5,6 @@
 //  Created by Grey Patterson on 2/15/20.
 //
 
-import Foundation
-
 func printedRating(_ rating: Int) -> String {
     var rate = rating
     if rate < 0 {
