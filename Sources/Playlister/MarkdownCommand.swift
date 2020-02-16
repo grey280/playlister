@@ -1,5 +1,4 @@
 import SwiftCLI
-import iTunesLibrary
 
 class MarkdownCommand: Command {
     let name = "md"
