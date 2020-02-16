@@ -33,6 +33,16 @@ class MarkdownCommand: Command {
             return
         }
         
+        var db: Connection? = nil
+        if includeLinks {
+            let workDir = try Folder.home.createSubfolderIfNeeded(at: ".playlister")
+            guard let dbFile = try? workDir.file(at: "links.sqlite3") else {
+                stderr <<< "Database not initialized. Run `playlister db init` first."
+                return
+            }
+            db = try Connection(dbFile.path)
+        }
+        
         let folder: Folder
         if let outPath = outputPath {
             folder = try Folder(path: outPath)
@@ -40,7 +50,8 @@ class MarkdownCommand: Command {
             folder = .current
         }
         let file = try folder.createFile(named: (outputName ?? listName) + ".md")
-        try file.write(list.asMarkdown(includeRating: includeRatings) ?? "Unable to parse")
+        
+        try file.write(list.asMarkdown(includeRating: includeRatings, linkDatabase: db) ?? "Unable to parse")
     }
     
     
