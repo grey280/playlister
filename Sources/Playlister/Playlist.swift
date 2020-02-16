@@ -8,7 +8,7 @@
 import Foundation
 import iTunesLibrary
 
-struct Playlist: Identifiable {
+class Playlist: Identifiable {
     typealias ID = NSNumber
     
     internal let origin: ITLibPlaylist
