@@ -13,14 +13,15 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/jakeheis/SwiftCLI", from: "6.0.0"),
-        .package(url: "https://github.com/JohnSundell/Files", from: "4.0.0")
+        .package(url: "https://github.com/JohnSundell/Files", from: "4.0.0"),
+        .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.12.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Playlister",
-            dependencies: ["SwiftCLI", "Files"],
+            dependencies: ["SwiftCLI", "Files", "SQLite"],
             linkerSettings: [
                 .linkedFramework("iTunesLibrary")
             ]),
