@@ -3,6 +3,22 @@ import Foundation
 
 class MarkdownCommand: Command {
     let name = "md"
+    let shortDescription: String = "Generate a Markdown file of a playlist"
+    
+    @Key("-l", "--playlist", description: "Name of the playlist to output") var playlistName: String?
+    
+    @Param var outputPath: String
+    
+    func execute() throws {
+        let library = try Library()
+        
+        
+    }
+}
+
+/*
+class MarkdownCommand: Command {
+    let name = "md"
     let shortDescription = "Generate Markdown files of playlists."
     
     // Base output path to use when generating
@@ -121,3 +137,4 @@ fileprivate extension Playlist {
         }
     }
 }
+*/
