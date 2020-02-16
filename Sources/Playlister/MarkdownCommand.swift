@@ -1,6 +1,7 @@
 import SwiftCLI
 import Foundation
 import Files
+import SQLite
 
 class MarkdownCommand: Command {
     let name = "md"
@@ -103,31 +104,14 @@ fileprivate extension Playlist {
             let title = item.title.markdownSafe
             let artist = item.artist?.name
             let album: String? = (item.album.title?.isEmpty ?? true) ? nil : item.album.title
-            if (includeRating){
-                let rating = printedRating(item.isRatingComputed ? 0 : item.rating)
-                if let artist = artist {
-                    guard let alb = album else {
-                        return "**\(title)** - \(artist.markdownSafe) (\(rating))"
-                    }
-                    return "**\(title)** - \(artist.markdownSafe) on *\(alb.markdownSafe)* (\(rating))"
-                }
-                guard let alb = album else {
-                    return "**\(title)** - Unknown Artist (\(rating))"
-                }
-                return "**\(title)** - Unknown Artist on *\(alb.markdownSafe)* (\(rating))"
-            } else {
-                if let artist = artist {
-                    guard let alb = album else {
-                        return "**\(title)** - \(artist.markdownSafe)"
-                    }
-                    return "**\(title)** - \(artist.markdownSafe) on *\(alb.markdownSafe)*"
-                }
-                guard let alb = album else {
-                    return "**\(title)** - Unknown Artist"
-                }
-                return "**\(title)** - Unknown Artist on *\(alb.markdownSafe)*"
+            var result = "**\(title)** - \(artist?.markdownSafe ?? "Unknown artist")"
+            if let album = album {
+                result = result + " on *\(album.markdownSafe)*"
             }
-            
+            if (includeRating) {
+                result = result + "(\(printedRating(item.isRatingComputed ? 0 : item.rating)))"
+            }
+            return result
         }).joined(separator: "\n\n")
         return "# \(name)\n\n\(body)\n"
     }
