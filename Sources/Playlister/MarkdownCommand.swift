@@ -7,12 +7,36 @@ class MarkdownCommand: Command {
     
     @Key("-l", "--playlist", description: "Name of the playlist to output") var playlistName: String?
     
+    @Flag("-r", "--ratings", description: "Include star ratings") var includeRatings: Bool
+    
     @Param var outputPath: String
     
     func execute() throws {
         let library = try Library()
+        let listName: String
+        if playlistName == nil {
+            for playlist in library.playlists{
+                printList(playlist, depth: 0)
+            }
+            listName = Input.readLine(prompt: "Which playlist?")
+        } else {
+            listName = playlistName!
+        }
         
-        
+        guard let list = library.findPlaylist(named: listName) else {
+            stderr <<< "Playlist not found."
+            return
+        }
+        print(list.asMarkdown(includeRating: includeRatings) ?? "Unable to parse")
+    }
+    
+    
+    func printList(_ list: Playlist, depth: Int){
+        let result = "\(String(repeating: " ", count: depth)) \(list.name)"
+        print(result)
+        for playlist in list.children {
+            printList(playlist, depth: depth + 1)
+        }
     }
 }
 
@@ -51,7 +75,7 @@ class MarkdownCommand: Command {
 //        gitPush.runSync()
     }
 }
-
+*/
 fileprivate extension String{
     var markdownSafe: String{
         return self.replacingOccurrences(of: "*", with: "\\*").replacingOccurrences(of: "[", with: "\\[").replacingOccurrences(of: "]", with: "\\]")
@@ -95,7 +119,8 @@ fileprivate extension Playlist {
         }).joined(separator: "\n\n")
         return "# \(name)\n\n\(body)\n"
     }
-    
+}
+    /*
     func printPlaylist(in path: String, with filemanager: FileManager, includeRating: Bool = false){
         if isParent{
             // create directory and recurse
