@@ -14,11 +14,11 @@ class DatabaseInitCommand: Command {
     let name = "init"
     let shortDescription: String = "Initialize the database"
     
-    @Flag("-h", "--hard", description: "Delete the existing database") var hard: Bool
+    @Flag("-c", "--clear", description: "Clear the existing database") var clear: Bool
     
     func execute() throws {
         let workDir = try Folder.home.createSubfolderIfNeeded(at: ".playlister")
-        if (hard) {
+        if (clear) {
             if let oldDB = try? workDir.file(at: "links.sqlite3"){
                 try oldDB.delete()
             }
