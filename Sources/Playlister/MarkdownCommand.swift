@@ -4,6 +4,13 @@ class MarkdownCommand: Command {
     let name = "md"
     let shortDescription = "Generate Markdown files of playlists."
     
+    // Base output path to use when generating
+    @Param var path: String
+    
+    @Flag("-r", "--rating", description: "Include star ratings in output") var rating: Bool
+    
+    @Key("-m", "--message", description: "Message to use when committing to Git repository.") var gitMessage: String?
+    
     func execute() throws {
         // TODO: Implement
     }
