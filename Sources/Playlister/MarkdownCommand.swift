@@ -6,9 +6,10 @@ class MarkdownCommand: Command {
     let name = "md"
     let shortDescription: String = "Generate a Markdown file of a playlist"
     
-    @Key("-l", "--playlist", description: "Name of the playlist to output") var playlistName: String?
+    @Key("-i", "--input", "--playlist", description: "Name of the playlist to output") var playlistName: String?
     
     @Flag("-r", "--ratings", description: "Include star ratings") var includeRatings: Bool
+    @Flag("-l", "--links", description: "Include links") var includeLinks: Bool
     
     @Key("-o", "--output", description: "Output directory; defaults to current directory") var outputPath: String?
     
