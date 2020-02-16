@@ -19,10 +19,10 @@ class MarkdownCommand: Command {
         let outp = PipeStream()
         let gitInit = Task(executable: "git", arguments: ["init"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
         gitInit.runSync()
-        let gitClear = Task(executable: "git", arguments: ["rm", "-rf", "."], directory: path, stdout: inp, stderr: stderr, stdin: outp)
-        gitClear.runSync()
-        let gitClean = Task(executable: "git", arguments: ["clean", "-fxd"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
-        gitClean.runSync()
+//        let gitClear = Task(executable: "git", arguments: ["rm", "-rf", "."], directory: path, stdout: inp, stderr: stderr, stdin: outp)
+//        gitClear.runSync()
+//        let gitClean = Task(executable: "git", arguments: ["clean", "-fxd"], directory: path, stdout: outp, stderr: stderr, stdin: inp)
+//        gitClean.runSync()
         
         for playlist in library.playlists {
             playlist.printPlaylist(in: path, with: filemanager)
