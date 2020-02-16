@@ -9,7 +9,7 @@ import Foundation
 import SwiftCLI
 
 class DatabaseCommandGroup: CommandGroup {
-    let children: [Routable] = []
+    let children: [Routable] = [DatabaseInitCommand()]
     
     var shortDescription: String = "Manage the links database"
     
