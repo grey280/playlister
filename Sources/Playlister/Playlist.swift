@@ -11,7 +11,7 @@ import iTunesLibrary
 struct Playlist: Identifiable {
     typealias ID = NSNumber
     
-    private let origin: ITLibPlaylist
+    internal let origin: ITLibPlaylist
     var children: [Playlist] = []
     var id: ID{
         origin.persistentID
