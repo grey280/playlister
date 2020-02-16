@@ -135,7 +135,7 @@ fileprivate extension Playlist {
                 })
                 let url: String?
                 if row == nil {
-                    let newLink = Input.readLine(prompt: "What link would you like to use for \(result)? (Enter 'x' for no link", secure: false)
+                    let newLink = Input.readLine(prompt: "What link would you like to use for \(result)? (Enter 'x' for no link)", secure: false)
                     url = newLink == "x" ? nil : newLink
                     let insert = table.insert(id <- item.persistentID.int64Value, link <- url)
                     try db.run(insert)
