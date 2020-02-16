@@ -1,5 +1,6 @@
 import SwiftCLI
 import Foundation
+import Files
 
 class MarkdownCommand: Command {
     let name = "md"
@@ -29,7 +30,15 @@ class MarkdownCommand: Command {
             stderr <<< "Playlist not found."
             return
         }
-        print(list.asMarkdown(includeRating: includeRatings) ?? "Unable to parse")
+        
+        let folder: Folder
+        if let outPath = outputPath {
+            folder = try Folder(path: outPath)
+        } else {
+            folder = .current
+        }
+        let file = try folder.createFile(named: (outputName ?? listName) + ".md")
+        try file.write(list.asMarkdown(includeRating: includeRatings) ?? "Unable to parse")
     }
     
     
