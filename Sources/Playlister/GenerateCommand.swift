@@ -13,6 +13,7 @@ class GenerateCommand : Command {
     let longDescription = "Output all playlists as markdown files in their full hierarchical structure"
     
     func execute() throws {
+        // TODO: All the git stuff
         let library = try Library()
         
         let rootFolder: Folder
