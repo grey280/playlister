@@ -120,7 +120,7 @@ internal extension Playlist {
                 result = result + " on *\(album.markdownSafe)*"
             }
             if (includeRating) {
-                result = result + "(\(printedRating(item.isRatingComputed ? 0 : item.rating)))"
+                result = result + " (\(printedRating(item.isRatingComputed ? 0 : item.rating)))"
             }
             if let db = linkDatabase {
                 let table = Table("links")
