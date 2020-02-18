@@ -5,6 +5,7 @@ import Files
 class GenerateCommand : Command {
     
     @Key("-o", "--output", description: "Output directory; defaults to ./playlists") var outputPath: String?
+    @Flag("-r", "--ratings", description: "Include star ratings") var includeRatings: Bool
     
     
     let name = "generate"
@@ -20,7 +21,9 @@ class GenerateCommand : Command {
         } else {
             rootFolder = try Folder.current.createSubfolderIfNeeded(at: "playlists")
         }
-        // TODO: Generate all playlists!
+        for playlist in library.playlists {
+            try playlist.printPlaylist(in: rootFolder, includeRating: includeRatings)
+        }
     }
 }
 
