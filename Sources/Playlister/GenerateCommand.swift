@@ -4,7 +4,7 @@ import Files
 
 class GenerateCommand : Command {
     
-    
+    @Key("-o", "--output", description: "Output directory; defaults to ./playlists") var outputPath: String?
     
     
     let name = "generate"
@@ -12,6 +12,6 @@ class GenerateCommand : Command {
     let longDescription = "Output all playlists as markdown files in their full hierarchical structure"
     
     func execute() throws {
-        <#code#>
+        // TODO: Implement
     }
 }
