@@ -41,7 +41,7 @@ fileprivate extension Playlist {
                 return
             }
             
-            let file = try folder.createFileIfNeeded(withName: name)
+            let file = try folder.createFileIfNeeded(withName: "\(name).md")
             try file.write(body)
         }
     }
