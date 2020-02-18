@@ -19,3 +19,9 @@ func printedRating(_ rating: Int) -> String {
     let no = String(repeating: "☆", count: unRate)
     return yes + no
 }
+
+internal extension String{
+    var markdownSafe: String{
+        return self.replacingOccurrences(of: "*", with: "\\*").replacingOccurrences(of: "[", with: "\\[").replacingOccurrences(of: "]", with: "\\]")
+    }
+}

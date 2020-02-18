@@ -100,13 +100,9 @@ class MarkdownCommand: Command {
     }
 }
 */
-fileprivate extension String{
-    var markdownSafe: String{
-        return self.replacingOccurrences(of: "*", with: "\\*").replacingOccurrences(of: "[", with: "\\[").replacingOccurrences(of: "]", with: "\\]")
-    }
-}
 
-fileprivate extension Playlist {
+
+internal extension Playlist {
     /// Convert a playlist to markdown
     /// - Parameters:
     ///   - includeRating: whether or not to include star ratings
