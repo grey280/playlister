@@ -23,3 +23,23 @@ class GenerateCommand : Command {
         // TODO: Generate all playlists!
     }
 }
+
+fileprivate extension Playlist {
+    func printPlaylist(in folder: Folder, includeRating: Bool = false) throws {
+        if isParent {
+            // create directory and recurse
+            let subdir = try folder.createSubfolderIfNeeded(at: name)
+            for child in children {
+                try child.printPlaylist(in: subdir, includeRating: includeRating)
+            }
+        } else {
+            guard let body = try asMarkdown(includeRating: includeRating) else {
+                // TODO: Log this in some way
+                return
+            }
+            
+            let file = try folder.createFileIfNeeded(withName: name)
+            try file.write(body)
+        }
+    }
+}
