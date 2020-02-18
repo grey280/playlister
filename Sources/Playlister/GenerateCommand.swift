@@ -12,6 +12,19 @@ class GenerateCommand : Command {
     let longDescription = "Output all playlists as markdown files in their full hierarchical structure"
     
     func execute() throws {
-        // TODO: Implement
+        let library = try Library()
+        
+        let rootFolder: Folder
+        if let outPath = outputPath {
+            rootFolder = try Folder(path: outPath)
+        } else {
+            let f = Folder.current
+            if f.containsSubfolder(named: "playlists") {
+                rootFolder = try f.subfolder(named: "playlists")
+            } else {
+                rootFolder = try f.createSubfolder(named: "playlists")
+            }
+        }
+        // TODO: Generate all playlists!
     }
 }
