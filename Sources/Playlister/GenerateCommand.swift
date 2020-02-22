@@ -34,6 +34,13 @@ class GenerateCommand : Command {
         for playlist in library.playlists {
             try playlist.printPlaylist(in: rootFolder, includeRating: includeRatings)
         }
+        let gitAdd = Task(executable: "git", arguments: ["add", "."], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+        gitAdd.runSync()
+        let message = commitMessage ?? "Automated update"
+        let gitCommit = Task(executable: "git", arguments: ["commit", "-m", message], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+        gitCommit.runSync()
+        let gitPush = Task(executable: "git", arguments: ["push"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+        gitPush.runSync()
     }
 }
 
