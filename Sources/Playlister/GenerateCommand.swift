@@ -6,6 +6,8 @@ class GenerateCommand : Command {
     
     @Key("-o", "--output", description: "Output directory; defaults to ./playlists") var outputPath: String?
     @Flag("-r", "--ratings", description: "Include star ratings") var includeRatings: Bool
+    @Flag("-g", "--git", description: "Git add/commit/push the result") var doGit: Bool
+    @Key("-m", "--message", description: "Message to use with git commit. Ignored if -g not specified. Defaults to 'Automated update'.") var commitMessage: String?
     
     
     let name = "generate"
