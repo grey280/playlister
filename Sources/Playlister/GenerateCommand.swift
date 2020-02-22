@@ -26,6 +26,10 @@ class GenerateCommand : Command {
         if (doGit){
             let gitInit = Task(executable: "git", arguments: ["init"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
             gitInit.runSync()
+            let gitFetch = Task(executable: "git", arguments: ["fetch"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+            gitFetch.runSync()
+            let gitPull = Task(executable: "git", arguments: ["pull"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+            gitPull.runSync()
             let gitClear = Task(executable: "git", arguments: ["rm", "-rf", "."], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
             gitClear.runSync()
             let gitClean = Task(executable: "git", arguments: ["clean", "-fxd"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
