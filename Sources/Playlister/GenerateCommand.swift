@@ -24,6 +24,14 @@ class GenerateCommand : Command {
         } else {
             rootFolder = try Folder.current.createSubfolderIfNeeded(at: "playlists")
         }
+        if (doGit){
+            let gitInit = Task(executable: "git", arguments: ["init"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+            gitInit.runSync()
+            let gitClear = Task(executable: "git", arguments: ["rm", "-rf", "."], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+            gitClear.runSync()
+            let gitClean = Task(executable: "git", arguments: ["clean", "-fxd"], directory: rootFolder.path, stdout: stdout, stderr: stderr, stdin: ReadStream.stdin)
+            gitClean.runSync()
+        }
         for playlist in library.playlists {
             try playlist.printPlaylist(in: rootFolder, includeRating: includeRatings)
         }
