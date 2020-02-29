@@ -13,5 +13,5 @@ class DatabaseCommandGroup: CommandGroup {
     
     var shortDescription: String = "Manage the links database"
     
-    let name = "db"
+    let name = "database"
 }
