@@ -36,4 +36,11 @@ struct Library {
     func findPlaylist(named: String) -> Playlist? {
         playlists.compactMap { $0.findPlaylist(named: named) }.first
     }
+    
+    var artists: [ITLibArtist]{
+        library.allMediaItems.compactMap { $0.artist }
+    }
+    var songs: [ITLibMediaItem]{
+        library.allMediaItems.filter { $0.mediaKind == .kindSong }
+    }
 }
