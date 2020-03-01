@@ -37,7 +37,7 @@ class ArtistIncomeCommand: Command {
         }
         stdout <<< "Found artist, has ID \(artist.persistentID)"
         return library.songs
-            .filter { $0.artist == artist }
+            .filter { $0.artist?.persistentID == artist.persistentID }
             .map { $0.playCount }
             .reduce(0, +)
     }
