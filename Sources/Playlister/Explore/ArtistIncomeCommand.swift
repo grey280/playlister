@@ -17,9 +17,9 @@ class ArtistIncomeCommand: Command {
         let artist = artistName ?? Input.readLine(prompt: "Which artist?")
         let plays = try getPlays(artist)
         
-        let amountApplePaysPerStream = 0.0056
+        let amountApplePaysPerStream = 0.0056 // Citation: https://soundcharts.com/blog/music-streaming-rates-payouts/
         let total = amountApplePaysPerStream * Double(plays)
-        stdout <<< "\(artist) has \(plays) plays total, which is approximately $\(total)"
+        stdout <<< "\(artist) has \(plays) plays total, which is approximately $\(String(format: "%.2f", total))"
     }
     
     let name = "income"
