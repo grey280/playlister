@@ -32,8 +32,10 @@ class ArtistIncomeCommand: Command {
             art.name == artistName
         }
         guard let artist = findArtist else {
+            stderr <<< "Unable to find artist \(artistName)"
             return 0
         }
+        stdout <<< "Found artist, has ID \(artist.persistentID)"
         return library.songs
             .filter { $0.artist == artist }
             .map { $0.playCount }
