@@ -14,16 +14,12 @@ class ArtistIncomeCommand: Command {
     @Param var artistName: String?
     
     func execute() throws {
-        let plays: Int
-        if let artistName = artistName{
-            plays = try getPlays(artistName)
-        } else {
-            let name = Input.readLine(prompt: "Which artist?", secure: false)
-            plays = try getPlays(name)
-        }
+        let artist = artistName ?? Input.readLine(prompt: "Which artist?")
+        let plays = try getPlays(artist)
+        
         let amountApplePaysPerStream = 0.0056
         let total = amountApplePaysPerStream * Double(plays)
-        stdout <<< "\(name) has \(plays) plays total, which is approximately $\(total)"
+        stdout <<< "\(artist) has \(plays) plays total, which is approximately $\(total)"
     }
     
     let name = "income"
