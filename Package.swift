@@ -21,10 +21,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Playlister",
-            dependencies: ["SwiftCLI", "Files", "SQLite"],
+            dependencies: ["SwiftCLI", "Files", "SQLite", "LibPlaylister"],
             linkerSettings: [
                 .linkedFramework("iTunesLibrary")
             ]),
+        .target(name: "LibPlaylister")
         .testTarget(
             name: "PlaylisterTests",
             dependencies: ["Playlister"]),
