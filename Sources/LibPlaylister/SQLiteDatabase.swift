@@ -35,3 +35,15 @@ public struct SQLiteDatabase{
         })
     }
 }
+
+
+extension URL: Value {
+    public static let declaredDatatype: String = "TEXT"
+    public typealias Datatype = String
+    public var datatypeValue: String {
+        self.absoluteString
+    }
+    public static func fromDatatypeValue(_ datatypeValue: String) -> URL {
+        URL(string: datatypeValue)!
+    }
+}
