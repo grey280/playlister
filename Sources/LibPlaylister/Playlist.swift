@@ -15,22 +15,24 @@ public protocol Playlist: Identifiable {
     var items: [PlaylistItem] { get }
 }
 
-public extension Playlist {
-    var isParent: Bool{
-        children.count > 0
-    }
+public protocol PlaylistItem {
+    var id: Int { get }
+    /// On the scale 0-100
+    var rating: Int? { get }
     
-    func findParent(_ of: Self.ID) -> Self?{
-        if (id == of){
-            return self
-        }
-        return children.compactMap({ $0.findParent(of)}).first
-    }
+    var artist: Artist? { get }
     
-    func findPlaylist(named: String) -> Self? {
-        if (named == name){
-            return self
-        }
-        return children.compactMap { $0.findPlaylist(named: named) }.first
-    }
+    var title: String? { get }
+    
+    var album: Album? { get }
+}
+
+public protocol Artist {
+    var id: Int { get }
+    var name: String? { get }
+}
+
+public protocol Album {
+    var id: Int { get }
+    var name: String? { get }
 }
