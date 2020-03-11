@@ -20,8 +20,4 @@ func printedRating(_ rating: Int) -> String {
     return yes + no
 }
 
-internal extension String{
-    var markdownSafe: String{
-        return self.replacingOccurrences(of: "*", with: "\\*").replacingOccurrences(of: "[", with: "\\[").replacingOccurrences(of: "]", with: "\\]")
-    }
-}
+
