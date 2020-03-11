@@ -11,14 +11,18 @@ public protocol PlaylistItem {
     var rating: Int? { get }
     
     var artist: Artist? { get }
+    
+    var title: String? { get }
+    
+    var album: Album? { get }
 }
 
+public protocol Artist {
+    var id: Int { get }
+    var name: String? { get }
+}
 
-/*
- 
- item.persistentID.int64Value // in `Identifiable`
- item.album.title
- item.artist
- item.title
- 
- */
+public protocol Album {
+    var id: Int { get }
+    var name: String? { get }
+}
