@@ -14,14 +14,9 @@ public protocol RatingFormatter {
     func format(_ rating: Int) -> String
 }
 
-public extension RatingFormatter{
-    static func fiveStar() -> RatingFormatter{
-        FiveStarRatingFormatter()
-    }
-}
-
-private struct FiveStarRatingFormatter: RatingFormatter {
-    func format(_ rating: Int) -> String {
+/// `RatingFormatter` that formats in a five-star, i.e. 40/100 -> ★★☆☆☆
+public struct FiveStarRatingFormatter: RatingFormatter {
+    public func format(_ rating: Int) -> String {
         var rate = rating
         if rate < 0 {
             rate = 0
