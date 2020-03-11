@@ -7,6 +7,7 @@
 
 import Foundation
 import iTunesLibrary
+import LibPlaylister
 
 class MusicLibrary: Library {
     var playlists: [MusicPlaylist]
