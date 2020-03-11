@@ -12,7 +12,7 @@ public protocol Playlist: Identifiable {
     
     var name: String { get }
     
-    
+    var items: [PlaylistItem] { get }
 }
 
 public extension Playlist {
