@@ -8,8 +8,8 @@
 import Foundation
 import iTunesLibrary
 
-struct Library {
-    var playlists: [Playlist]
+struct _Library {
+    var playlists: [_Playlist]
     private let library: ITLibrary
     
     init() throws {
@@ -23,17 +23,17 @@ struct Library {
             let playlist = queue.remove(at: 0)
             if let parentID = playlist.parentID{
                 if let parent = playlists.compactMap({$0.findParent(parentID)}).first{
-                    parent.children.append(Playlist(playlist))
+                    parent.children.append(_Playlist(playlist))
                 } else {
                     queue.append(playlist)
                 }
             } else {
-                playlists.append(Playlist(playlist))
+                playlists.append(_Playlist(playlist))
             }
         }
     }
     
-    func findPlaylist(named: String) -> Playlist? {
+    func findPlaylist(named: String) -> _Playlist? {
         playlists.compactMap { $0.findPlaylist(named: named) }.first
     }
     

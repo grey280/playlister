@@ -8,16 +8,16 @@
 import Foundation
 import iTunesLibrary
 
-class Playlist: Identifiable {
+class _Playlist: Identifiable {
     typealias ID = NSNumber
     
     internal let origin: ITLibPlaylist
-    var children: [Playlist] = []
+    var children: [_Playlist] = []
     var id: ID{
         origin.persistentID
     }
     
-    var parentID: Playlist.ID?
+    var parentID: _Playlist.ID?
     
     var name: String{
         origin.name
@@ -31,18 +31,18 @@ class Playlist: Identifiable {
         origin = from
     }
     
-    func findParent(_ of: Playlist.ID) -> Playlist?{
+    func findParent(_ of: _Playlist.ID) -> _Playlist?{
         if (id == of){
             return self
         }
         return children.compactMap({ $0.findParent(of)}).first
     }
     
-    func findParent(_ of: ITLibPlaylist) -> Playlist? {
+    func findParent(_ of: ITLibPlaylist) -> _Playlist? {
         findParent(of.persistentID)
     }
     
-    func findPlaylist(named: String) -> Playlist? {
+    func findPlaylist(named: String) -> _Playlist? {
         if (named == name){
             return self
         }

@@ -14,13 +14,13 @@ class ListCommand: Command {
     @Flag("-h", "--human", "Print in a human-readable, tree format") var human: Bool
     
     func execute() throws {
-        let library = try Library()
+        let library = try _Library()
         for playlist in library.playlists {
             printList(playlist, depth: 0, increasing: human)
         }
     }
     
-    func printList(_ list: Playlist, depth: Int, increasing: Bool){
+    func printList(_ list: _Playlist, depth: Int, increasing: Bool){
         let result = "\(String(repeating: " ", count: depth)) \(list.name)"
         print(result)
         let newDepth = increasing ? depth + 1 : depth

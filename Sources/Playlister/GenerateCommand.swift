@@ -15,7 +15,7 @@ class GenerateCommand : Command {
     let longDescription = "Output all playlists as markdown files in their full hierarchical structure."
     
     func execute() throws {
-        let library = try Library()
+        let library = try _Library()
         
         let rootFolder: Folder
         if let outPath = outputPath {
@@ -50,7 +50,7 @@ class GenerateCommand : Command {
     }
 }
 
-fileprivate extension Playlist {
+fileprivate extension _Playlist {
     func printPlaylist(in folder: Folder, includeRating: Bool = false) throws {
         if isParent {
             // create directory and recurse

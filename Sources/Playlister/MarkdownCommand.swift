@@ -18,7 +18,7 @@ class MarkdownCommand: Command {
     @Key("-n", "--name", description: "Output file name; defaults to the name of the selected playlist") var outputName: String?
     
     func execute() throws {
-        let library = try Library()
+        let library = try _Library()
         let listName: String
         if playlistName == nil {
             for playlist in library.playlists{
@@ -56,7 +56,7 @@ class MarkdownCommand: Command {
     }
     
     
-    func printList(_ list: Playlist, depth: Int){
+    func printList(_ list: _Playlist, depth: Int){
         let result = "\(String(repeating: " ", count: depth)) \(list.name)"
         print(result)
         for playlist in list.children {
@@ -65,7 +65,7 @@ class MarkdownCommand: Command {
     }
 }
 
-internal extension Playlist {
+internal extension _Playlist {
     /// Convert a playlist to markdown
     /// - Parameters:
     ///   - includeRating: whether or not to include star ratings

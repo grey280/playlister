@@ -27,7 +27,7 @@ class ArtistIncomeCommand: Command {
     let shortDescription: String = "Estimate the amount of money an artist has made from you listening to their music."
     
     func getPlays(_ artistName: String) throws -> Int {
-        let library = try Library()
+        let library = try _Library()
         let findArtist = library.artists.first { (art) -> Bool in
             art.name == artistName
         }
