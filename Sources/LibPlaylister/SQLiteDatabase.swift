@@ -28,7 +28,7 @@ public struct SQLiteDatabase{
         let db = try Connection(file.path)
         let links = Table("links")
         let id = Expression<Int64>("id")
-        let link = Expression<String?>("link")
+        let link = Expression<URL?>("link")
         try db.run(links.create { t in
             t.column(id, primaryKey: true)
             t.column(link)
