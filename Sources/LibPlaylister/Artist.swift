@@ -5,4 +5,7 @@
 //  Created by Grey Patterson on 3/11/20.
 //
 
-import Foundation
+public protocol Artist {
+    var id: Int { get }
+    var name: String? { get }
+}
