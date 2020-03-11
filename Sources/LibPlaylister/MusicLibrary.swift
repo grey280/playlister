@@ -22,17 +22,63 @@ class MusicLibrary: Library {
 }
 
 final class MusicPlaylist: Playlist{
-    var children: [MusicPlaylist]
+    var parentID: Int?
+    var children: [MusicPlaylist] = []
     
-    var parentID: ObjectIdentifier?
+    var id: Int{
+        origin.persistentID.intValue
+    }
     
-    var name: String
+    var name: String {
+        origin.name
+    }
     
-    var items: [PlaylistItem]
+    var items: [MusicPlaylistItem]
     
     fileprivate let origin: ITLibPlaylist
     
     init(itunes: ITLibPlaylist){
         origin = itunes
+        items = itunes.items.map { MusicPlaylistItem(itunes: $0) }
+    }
+}
+
+class MusicPlaylistItem: PlaylistItem {
+    var id: Int
+    
+    var rating: Int?
+    
+    var artist: Artist?
+    
+    var title: String?
+    
+    var album: Album?
+    
+    init(itunes: ITLibMediaItem){
+        id = itunes.persistentID.intValue
+        rating = itunes.isRatingComputed ? 0 : itunes.rating
+        
+    }
+}
+
+class MusicArtist: Artist {
+    var id: Int
+    
+    var name: String?
+    
+    init(itunes: ITLibArtist){
+        id = itunes.persistentID.intValue
+        name = itunes.name
+    }
+}
+
+class MusicAlbum: Album {
+    var id: Int
+    
+    var name: String?
+    
+    init(itunes: ITLibAlbum){
+        id = itunes.persistentID.intValue
+        name = itunes.title
     }
 }
