@@ -2,6 +2,7 @@ import SwiftCLI
 import Foundation
 import Files
 import SQLite
+import LibPlaylister
 
 class MarkdownCommand: Command {
     let name = "md"

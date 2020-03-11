@@ -26,7 +26,7 @@ let package = Package(
                 .linkedFramework("iTunesLibrary")
             ]),
         .target(
-            name: "LibPlaylister",
+            name: "LibPlaylister"
         ),
         .testTarget(
             name: "PlaylisterTests",
