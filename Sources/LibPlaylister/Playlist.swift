@@ -6,11 +6,11 @@
 //
 
 protocol Playlist: Identifiable {
-    var children: [Self] { get set }
+    var children: [Self] { get }
     
-    var parentID: Self.ID? { get set }
+    var parentID: Self.ID? { get }
     
-    var name: String { get set }
+    var name: String { get }
     
     
 }
