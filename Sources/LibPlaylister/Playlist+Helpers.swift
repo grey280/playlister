@@ -26,6 +26,10 @@ public extension Playlist {
         return children.compactMap { $0.findPlaylist(named: named) }.first
     }
     
+    /// Convert the playlist to Markdown
+    /// - Parameters:
+    ///   - ratingFormatter: `RatingFormatter` to use. If nil, does not print ratings.
+    ///   - linkStore: `LinkStore` to use. If nil, does not include links.
     func asMarkdown(ratingFormatter: RatingFormatter?, usingLinkStore linkStore: LinkStore? = nil) -> String? {
         if isParent {
             return nil
@@ -38,6 +42,10 @@ public extension Playlist {
 }
 
 extension PlaylistItem {
+    /// Convert the item to Markdown
+    /// - Parameters:
+    ///   - ratingFormatter: `RatingFormatter` to use. If nil, does not print ratings.
+    ///   - linkStore: `LinkStore` to use. If nil, does not include links.
     func asMarkdown(ratingFormatter: RatingFormatter?, usingLinkStore linkStore: LinkStore?) -> String {
         let artistName = artist?.name?.markdownSafe
         
