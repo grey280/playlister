@@ -5,8 +5,8 @@
 //  Created by Grey Patterson on 3/11/20.
 //
 
-protocol PlaylistItem: Identifiable {
     var rating: Double? { get }
+public protocol PlaylistItem: Identifiable {
 }
 
 

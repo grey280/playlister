@@ -5,7 +5,7 @@
 //  Created by Grey Patterson on 3/11/20.
 //
 
-protocol Playlist: Identifiable {
+public protocol Playlist: Identifiable {
     var children: [Self] { get }
     
     var parentID: Self.ID? { get }
@@ -15,7 +15,7 @@ protocol Playlist: Identifiable {
     
 }
 
-extension Playlist {
+public extension Playlist {
     var isParent: Bool{
         children.count > 0
     }
