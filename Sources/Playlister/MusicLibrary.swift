@@ -33,7 +33,7 @@ final class MusicPlaylist: Playlist{
         origin.name
     }
     
-    var items: [MusicPlaylistItem]
+    var items: [PlaylistItem]
     
     fileprivate let origin: ITLibPlaylist
     
