@@ -9,7 +9,7 @@ import Foundation
 import Files
 import SQLite
 
-public struct SQLiteDatabase{
+public class SQLiteDatabase{
     let file: File
     
     public init(_ with: File){
