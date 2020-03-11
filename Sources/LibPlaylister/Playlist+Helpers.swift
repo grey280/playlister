@@ -25,4 +25,8 @@ public extension Playlist {
         }
         return children.compactMap { $0.findPlaylist(named: named) }.first
     }
+    
+    func asMarkdown(includeLinks: Bool = false, usingLinkStore: LinkStore? = nil){
+        
+    }
 }
