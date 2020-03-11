@@ -26,27 +26,27 @@ public extension Playlist {
         return children.compactMap { $0.findPlaylist(named: named) }.first
     }
     
-    func asMarkdown(includeRatings: Bool = false, usingLinkStore linkStore: LinkStore? = nil) -> String? {
+    func asMarkdown(ratingFormatter: RatingFormatter?, usingLinkStore linkStore: LinkStore? = nil) -> String? {
         if isParent {
             return nil
         }
         let body = items.map { (item) -> String in
-            item.asMarkdown(includeRatings: includeRatings, usingLinkStore: linkStore)
+            item.asMarkdown(ratingFormatter: ratingFormatter, usingLinkStore: linkStore)
         }.joined(separator: "\n\n")
         return "# \(name.markdownSafe)\n\n\(body)\n"
     }
 }
 
 extension PlaylistItem {
-    func asMarkdown(includeRatings: Bool, usingLinkStore linkStore: LinkStore?) -> String {
+    func asMarkdown(ratingFormatter: RatingFormatter?, usingLinkStore linkStore: LinkStore?) -> String {
         let artistName = artist?.name?.markdownSafe
         
         var result = "**\(title?.markdownSafe ?? "(Untitled item)")** - \(artistName ?? "Unknown artist")"
         if let albumTitle = album?.name?.markdownSafe {
             result = result + " on *\(albumTitle)"
         }
-        if (includeRatings){
-            result = result + "" // TODO: Implement
+        if let rateFormat = ratingFormatter {
+            result = result + " (\(rateFormat.format(rating ?? 0)))"
         }
         if let store = linkStore {
             if let url = store.link(for: self) {
