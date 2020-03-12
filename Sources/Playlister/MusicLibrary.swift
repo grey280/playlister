@@ -10,6 +10,14 @@ import iTunesLibrary
 import LibPlaylister
 
 class MusicLibrary: Library {
+    var artists: [Artist] {
+        library.allMediaItems.compactMap { $0.artist != nil ? MusicArtist(itunes: $0.artist!) : nil }
+    }
+    
+    var items: [PlaylistItem] {
+        library.allMediaItems.compactMap { MusicPlaylistItem(itunes: $0) }
+    }
+    
     var playlists: [MusicPlaylist]
     
     typealias PlaylistType = MusicPlaylist
@@ -45,20 +53,37 @@ final class MusicPlaylist: Playlist{
 }
 
 class MusicPlaylistItem: PlaylistItem {
-    var id: Int
+    var id: Int {
+        origin.persistentID.intValue
+    }
     
-    var rating: Int?
+    var rating: Int? {
+        origin.isRatingComputed ? 0 : origin.rating
+    }
     
-    var artist: Artist?
+    var artist: Artist?{
+        if let art = origin.artist {
+            return MusicArtist(itunes: art)
+        }
+        return nil
+    }
     
-    var title: String?
+    var title: String? {
+        origin.title
+    }
     
-    var album: Album?
+    var album: Album? {
+        MusicAlbum(itunes: origin.album)
+    }
+    
+    var playCount: Int {
+        origin.playCount
+    }
+    
+    fileprivate let origin: ITLibMediaItem
     
     init(itunes: ITLibMediaItem){
-        id = itunes.persistentID.intValue
-        rating = itunes.isRatingComputed ? 0 : itunes.rating
-        
+        origin = itunes
     }
 }
 
