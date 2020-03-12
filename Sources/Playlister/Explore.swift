@@ -19,11 +19,12 @@ struct Explore: ParsableCommand {
 }
 
 struct ArtistIncome: ParsableCommand {
-    @Argument(help: ArgumentHelp("Name of the artist to view.", discussion: "")) var artistName: String
+    @Argument(help: ArgumentHelp("Name of the artist to view.", discussion: "")) var artistNames: [String]
     
     static var configuration: CommandConfiguration = CommandConfiguration(commandName: "income", abstract: "Estimate the amount of money an artist has made from you listening to their music.")
     
     func run() throws {
+        let artistName: String = artistNames.joined(separator: " ")
         let plays = try getPlays(artistName)
         let amountApplePaysPerStream = 0.0056 // Citation: https://soundcharts.com/blog/music-streaming-rates-payouts/
         let total = amountApplePaysPerStream * Double(plays)
