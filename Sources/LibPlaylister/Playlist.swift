@@ -25,6 +25,8 @@ public protocol PlaylistItem {
     var title: String? { get }
     
     var album: Album? { get }
+    
+    var playCount: Int { get }
 }
 
 public protocol Artist {
