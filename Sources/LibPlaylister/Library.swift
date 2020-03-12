@@ -10,4 +10,7 @@ import Foundation
 public protocol Library {
     associatedtype PlaylistType: Playlist
     var playlists: [PlaylistType] { get }
+    
+    var artists: [Artist] { get }
+    var items: [PlaylistItem] { get }
 }
