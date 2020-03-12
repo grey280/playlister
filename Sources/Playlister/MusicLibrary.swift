@@ -27,6 +27,22 @@ class MusicLibrary: Library {
     init() throws {
         library = try ITLibrary(apiVersion: "1.0")
         playlists = []
+        
+        var queue = library.allPlaylists.filter { (playlist) -> Bool in
+            !playlist.isMaster && playlist.isVisible && playlist.distinguishedKind == .kindNone
+        }
+        while (queue.count > 0){
+            let playlist = queue.remove(at: 0)
+            if let parentID = playlist.parentID{
+                if let parent = playlists.compactMap({$0.findParent(parentID.intValue)}).first{
+                    parent.children.append(MusicPlaylist(itunes: playlist))
+                } else {
+                    queue.append(playlist)
+                }
+            } else {
+                playlists.append(MusicPlaylist(itunes: playlist))
+            }
+        }
     }
 }
 
@@ -88,23 +104,33 @@ class MusicPlaylistItem: PlaylistItem {
 }
 
 class MusicArtist: Artist {
-    var id: Int
+    var id: Int {
+        origin.persistentID.intValue
+    }
     
-    var name: String?
+    var name: String? {
+        origin.name
+    }
+    
+    fileprivate let origin: ITLibArtist
     
     init(itunes: ITLibArtist){
-        id = itunes.persistentID.intValue
-        name = itunes.name
+        origin = itunes
     }
 }
 
 class MusicAlbum: Album {
-    var id: Int
+    var id: Int {
+        origin.persistentID.intValue
+    }
     
-    var name: String?
+    var name: String? {
+        origin.title
+    }
+    
+    fileprivate let origin: ITLibAlbum
     
     init(itunes: ITLibAlbum){
-        id = itunes.persistentID.intValue
-        name = itunes.title
+        origin = itunes
     }
 }
