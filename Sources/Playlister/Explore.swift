@@ -14,7 +14,7 @@ struct Explore: ParsableCommand {
     static var configuration = CommandConfiguration(
         commandName: "explore",
         abstract: "Explore your library",
-        subcommands: []
+        subcommands: [ArtistIncome.self]
     )
 }
 
@@ -24,7 +24,10 @@ struct ArtistIncome: ParsableCommand {
     static var configuration: CommandConfiguration = CommandConfiguration(commandName: "income", abstract: "Estimate the amount of money an artist has made from you listening to their music.")
     
     func run() throws {
-        
+        let plays = try getPlays(artistName)
+        let amountApplePaysPerStream = 0.0056 // Citation: https://soundcharts.com/blog/music-streaming-rates-payouts/
+        let total = amountApplePaysPerStream * Double(plays)
+        print("\(artistName) has \(plays) total, which is approximately $\(String(format: "%.2f", total))")
     }
     
     private func getPlays(_ artistName: String) throws -> Int {
@@ -42,21 +45,3 @@ struct ArtistIncome: ParsableCommand {
             .reduce(0, +)
     }
 }
-
-
-
-/*
- 
- struct DatabaseReset: ParsableCommand {
-     static var configuration = CommandConfiguration(
-         commandName: "reset",
-         abstract: "Reset the links database"
-     )
-     
-     func run() throws {
-         let database = try SQLiteDatabase()
-         try database.resetDatabase()
-     }
- }
-
- */
