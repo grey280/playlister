@@ -27,7 +27,7 @@ struct ArtistIncome: ParsableCommand {
         let plays = try getPlays(artistName)
         let amountApplePaysPerStream = 0.0056 // Citation: https://soundcharts.com/blog/music-streaming-rates-payouts/
         let total = amountApplePaysPerStream * Double(plays)
-        print("\(artistName) has \(plays) total, which is approximately $\(String(format: "%.2f", total))")
+        print("\(artistName) has \(plays) plays, which is approximately $\(String(format: "%.2f", total))")
     }
     
     private func getPlays(_ artistName: String) throws -> Int {

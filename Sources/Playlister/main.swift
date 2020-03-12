@@ -13,7 +13,7 @@ struct CLI: ParsableCommand {
     static var configuration = CommandConfiguration(
         commandName: "playlister",
         abstract: "A command-line tool for reading your iTunes/Music.app playlists",
-        subcommands: [Database.self]
+        subcommands: [Database.self, Explore.self]
     )
 }
 CLI.main()
