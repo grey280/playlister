@@ -13,6 +13,8 @@ public protocol Playlist: Identifiable {
     var name: String { get }
     
     var items: [PlaylistItem] { get }
+    
+    func findPlaylist(named: String) -> Self?
 }
 
 public protocol PlaylistItem {
