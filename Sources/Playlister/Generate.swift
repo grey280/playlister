@@ -21,11 +21,11 @@ struct Generate: ParsableCommand {
         let library = try MusicLibrary()
         let rootFolder = try Folder.current.createSubfolderIfNeeded(at: "playlists")
         if (git){
-            try shellOut(to: ["git", "init"], at: rootFolder.path)
-            try shellOut(to: ["git", "fetch"], at: rootFolder.path)
-            try shellOut(to: ["git", "pull"], at: rootFolder.path)
-            try shellOut(to: ["git", "rm", "-rf", "."], at: rootFolder.path)
-            try shellOut(to: ["git", "clean", "-fxd"], at: rootFolder.path)
+            try shellOut(to: "git", arguments: ["init"], at: rootFolder.path)
+            let _ = try? shellOut(to: "git", arguments: ["fetch"], at: rootFolder.path)
+            let _ = try? shellOut(to: "git", arguments: ["pull"], at: rootFolder.path)
+            try shellOut(to: "git", arguments: ["rm", "-rf", "."], at: rootFolder.path)
+            try shellOut(to: "git", arguments: ["clean", "-fxd"], at: rootFolder.path)
         }
         let database = includeLinks ? try SQLiteDatabase(interactive: false) : nil
         let formatter = includeRatings ? FiveStarRatingFormatter() : nil
@@ -33,9 +33,9 @@ struct Generate: ParsableCommand {
             try playlist.printPlaylist(in: rootFolder, ratingFormatter: formatter, linkStore: database)
         }
         if (git) {
-            try shellOut(to: ["git", "add", "."], at: rootFolder.path)
-            try shellOut(to: ["git", "commit", "-m", "\"Automated update\""], at: rootFolder.path)
-            try shellOut(to: ["git", "push"], at: rootFolder.path)
+            try shellOut(to: "git", arguments: ["add", "."], at: rootFolder.path)
+            try shellOut(to: "git", arguments: ["commit", "-m", "\"Automated update\""], at: rootFolder.path)
+            let _ = try? shellOut(to: "git", arguments: ["push"], at: rootFolder.path)
         }
     }
 }
