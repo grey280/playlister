@@ -13,14 +13,18 @@ public class SQLiteDatabase{
     let file: File
     var database: Connection!
     
-    public init(_ with: File) throws{
+    let interactive: Bool
+    
+    public init(_ with: File, interactive: Bool = false) throws{
         self.file = with
+        self.interactive = interactive
         try initialize()
     }
-    public init() throws {
+    public init(interactive: Bool = false) throws {
         self.file = try Folder.home
             .createSubfolderIfNeeded(at: ".playlister")
             .createFileIfNeeded(at: "links.sqlite3")
+        self.interactive = interactive
         try initialize()
     }
     
@@ -65,7 +69,7 @@ extension SQLiteDatabase: LinkStore{
             true
         }) {
             return row[link]
-        } else {
+        } else if (interactive){
             var input: String?
             while (input == nil){
                 print("What link would you like to use for \(item.asMarkdown(ratingFormatter: nil, usingLinkStore: nil))? (Leave blank for no link.)")
@@ -79,6 +83,6 @@ extension SQLiteDatabase: LinkStore{
                 return url
             }
         }
-        return nil // should never actually happen but here we are
+        return nil
     }
 }

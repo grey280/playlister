@@ -22,7 +22,7 @@ struct Markdown: ParsableCommand {
         guard let list = library.findPlaylist(named: playlistName) else {
             throw RuntimeError("Playlist not found.")
         }
-        let database = includeLinks ? try SQLiteDatabase() : nil
+        let database = includeLinks ? try SQLiteDatabase(interactive: true) : nil
         let folder = Folder.current
         let file = try folder.createFile(named: playlistName + ".md")
         let formatter = includeRatings ? FiveStarRatingFormatter() : nil
