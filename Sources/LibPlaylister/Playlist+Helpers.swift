@@ -51,7 +51,7 @@ extension PlaylistItem {
         
         var result = "**\(title?.markdownSafe ?? "(Untitled item)")** - \(artistName ?? "Unknown artist")"
         if let albumTitle = album?.name?.markdownSafe {
-            result = result + " on *\(albumTitle)"
+            result = result + " on *\(albumTitle)*"
         }
         if let rateFormat = ratingFormatter {
             result = result + " (\(rateFormat.format(rating ?? 0)))"
