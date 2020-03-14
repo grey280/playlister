@@ -7,5 +7,5 @@
 import Foundation
 
 public protocol LinkStore {
-    func link(for: PlaylistItem) -> URL?
+    func link(for: PlaylistItem) throws -> URL?
 }

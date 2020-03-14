@@ -13,6 +13,8 @@ public protocol Playlist: Identifiable {
     var name: String { get }
     
     var items: [PlaylistItem] { get }
+    
+    func findPlaylist(named: String) -> Self?
 }
 
 public protocol PlaylistItem {
@@ -25,6 +27,8 @@ public protocol PlaylistItem {
     var title: String? { get }
     
     var album: Album? { get }
+    
+    var playCount: Int { get }
 }
 
 public protocol Artist {
