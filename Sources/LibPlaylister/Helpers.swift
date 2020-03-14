@@ -27,3 +27,7 @@ extension String{
         return self.replacingOccurrences(of: "*", with: "\\*").replacingOccurrences(of: "[", with: "\\[").replacingOccurrences(of: "]", with: "\\]")
     }
 }
+
+public struct RuntimeError: Error, CustomStringConvertible {
+    public var description: String
+}
