@@ -17,6 +17,8 @@ struct Generate: ParsableCommand {
     @Flag(name: [.long, .customShort("l")], help: "Non-interactively include links. To fill the links database, use the 'md' command.") var includeLinks: Bool
     @Flag(name: [.long, .customShort("g")]) var git: Bool
     
+    @Option(name: .long, default: "\"Automated update\"", help: "Commit message to use when in git mode.") var commitMessage: String
+    
     func run() throws {
         let library = try MusicLibrary()
         let didExist = Folder.current.containsSubfolder(named: "playlists")
@@ -37,7 +39,7 @@ struct Generate: ParsableCommand {
         }
         if (git) {
             try shellOut(to: "git", arguments: ["add", "."], at: rootFolder.path)
-            try shellOut(to: "git", arguments: ["commit", "-m", "\"Automated update\""], at: rootFolder.path)
+            try shellOut(to: "git", arguments: ["commit", "-m", commitMessage], at: rootFolder.path)
             let _ = try? shellOut(to: "git", arguments: ["push"], at: rootFolder.path)
         }
     }
