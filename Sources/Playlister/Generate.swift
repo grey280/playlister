@@ -19,13 +19,16 @@ struct Generate: ParsableCommand {
     
     func run() throws {
         let library = try MusicLibrary()
+        let didExist = Folder.current.containsSubfolder(named: "playlists")
         let rootFolder = try Folder.current.createSubfolderIfNeeded(at: "playlists")
         if (git){
             try shellOut(to: "git", arguments: ["init"], at: rootFolder.path)
             let _ = try? shellOut(to: "git", arguments: ["fetch"], at: rootFolder.path)
             let _ = try? shellOut(to: "git", arguments: ["pull"], at: rootFolder.path)
-            try shellOut(to: "git", arguments: ["rm", "-rf", "."], at: rootFolder.path)
-            try shellOut(to: "git", arguments: ["clean", "-fxd"], at: rootFolder.path)
+            if (didExist){
+                try shellOut(to: "git", arguments: ["rm", "-rf", "."], at: rootFolder.path)
+                try shellOut(to: "git", arguments: ["clean", "-fxd"], at: rootFolder.path)
+            }
         }
         let database = includeLinks ? try SQLiteDatabase(interactive: false) : nil
         let formatter = includeRatings ? FiveStarRatingFormatter() : nil
