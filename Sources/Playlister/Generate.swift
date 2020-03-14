@@ -27,6 +27,33 @@ struct Generate: ParsableCommand {
             try shellOut(to: ["git", "rm", "-rf", "."], at: rootFolder.path)
             try shellOut(to: ["git", "clean", "-fxd"], at: rootFolder.path)
         }
-       
+        let database = includeLinks ? try SQLiteDatabase(interactive: false) : nil
+        let formatter = includeRatings ? FiveStarRatingFormatter() : nil
+        for playlist in library.playlists {
+            try playlist.printPlaylist(in: rootFolder, ratingFormatter: formatter, linkStore: database)
+        }
+        if (git) {
+            try shellOut(to: ["git", "add", "."], at: rootFolder.path)
+            try shellOut(to: ["git", "commit", "-m", "\"Automated update\""], at: rootFolder.path)
+            try shellOut(to: ["git", "push"], at: rootFolder.path)
+        }
+    }
+}
+
+fileprivate extension Playlist {
+    func printPlaylist(in folder: Folder, ratingFormatter: RatingFormatter?, linkStore: LinkStore?) throws {
+        if isParent {
+            // create directory and recurse
+            let subdir = try folder.createSubfolderIfNeeded(at: name)
+            for child in children {
+                try child.printPlaylist(in: subdir, ratingFormatter: ratingFormatter, linkStore: linkStore)
+            }
+        } else {
+            guard let body = asMarkdown(ratingFormatter: ratingFormatter, usingLinkStore: linkStore) else {
+                throw RuntimeError("Unable to generate playlist body.")
+            }
+            let file = try folder.createFileIfNeeded(withName: "\(name).md")
+            try file.write(body)
+        }
     }
 }
