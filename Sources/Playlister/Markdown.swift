@@ -14,8 +14,8 @@ struct Markdown: ParsableCommand {
     
     @Argument() var playlistName: String
     
-    @Flag() var includeRatings: Bool
-    @Flag() var includeLinks: Bool
+    @Flag(name: [.long, .customShort("r")]) var includeRatings: Bool
+    @Flag(name: [.long, .customShort("l")]) var includeLinks: Bool
     
     func run() throws {
         let library = try MusicLibrary()
