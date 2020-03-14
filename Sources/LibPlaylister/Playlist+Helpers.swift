@@ -57,7 +57,7 @@ extension PlaylistItem {
             result = result + " (\(rateFormat.format(rating ?? 0)))"
         }
         if let store = linkStore {
-            if let url = store.link(for: self) {
+            if let url = try? store.link(for: self) {
                 result = "(\(result))[\(url.absoluteString)]"
             }
         }

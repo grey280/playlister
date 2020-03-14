@@ -54,10 +54,9 @@ extension URL: Value {
 }
 
 extension SQLiteDatabase: LinkStore{
-    public func link(for item: PlaylistItem) -> URL? {
+    public func link(for item: PlaylistItem) throws -> URL? {
         guard let db = database else {
-            // TODO: Log the error in some way
-            return nil
+            throw RuntimeError("Unable to connect to links database.")
         }
         let table = Table("links")
         let id = Expression<Int>("id")
