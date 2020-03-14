@@ -18,8 +18,8 @@ struct Markdown: ParsableCommand {
     
     func run() throws {
         let library = try MusicLibrary()
-        guard let list = library.findPlaylist else {
-            
+        guard let list = library.findPlaylist(named: playlistName) else {
+            throw RuntimeError(description: "Playlist not found.")
         }
     }
 }
