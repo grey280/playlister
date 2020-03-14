@@ -39,7 +39,7 @@ struct Generate: ParsableCommand {
         }
         if (git) {
             try shellOut(to: "git", arguments: ["add", "."], at: rootFolder.path)
-            try shellOut(to: "git", arguments: ["commit", "-m", commitMessage], at: rootFolder.path)
+            let _ = try? shellOut(to: "git", arguments: ["commit", "-m", commitMessage], at: rootFolder.path)
             let _ = try? shellOut(to: "git", arguments: ["push"], at: rootFolder.path)
         }
     }
