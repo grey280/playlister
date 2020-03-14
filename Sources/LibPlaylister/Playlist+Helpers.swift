@@ -58,7 +58,7 @@ extension PlaylistItem {
         }
         if let store = linkStore {
             if let url = try? store.link(for: self) {
-                result = "(\(result))[\(url.absoluteString)]"
+                result = "[\(result)](\(url.absoluteString))"
             }
         }
         return result
