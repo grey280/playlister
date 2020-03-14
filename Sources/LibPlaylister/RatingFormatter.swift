@@ -32,4 +32,6 @@ public struct FiveStarRatingFormatter: RatingFormatter {
         let no = String(repeating: "☆", count: unrate)
         return yes + no
     }
+    
+    public init() { }
 }
