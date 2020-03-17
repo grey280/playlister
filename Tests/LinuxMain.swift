@@ -3,6 +3,6 @@ import XCTest
 import LibPlaylisterTests
 
 var tests = [XCTestCaseEntry]()
-tests += LibraryTests.allTests()
-tests += HelperTests.allTests()
+tests += LibPlaylisterTests.__allTests()
+
 XCTMain(tests)
