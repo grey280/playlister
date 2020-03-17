@@ -20,7 +20,7 @@ struct List: ParsableCommand {
             printList(playlist, depth: 0, increasing: human)
         }
         #else
-        throw RuntimeError(description: "Unsupported operating system!")
+        throw RuntimeError("Unsupported operating system!")
         #endif
     }
     
