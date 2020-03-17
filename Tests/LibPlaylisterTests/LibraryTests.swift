@@ -9,31 +9,30 @@ import XCTest
 import LibPlaylister
 
 class LibraryTests: XCTestCase {
-    
+    var library: TestLibrary?
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.library = TestLibrary()
+        let list1 = TestPlaylist()
+        list1.name = "List 1"
+        list1.id = 1
+        let list2 = TestPlaylist()
+        list2.name = "List 2"
+        list2.id = 2
+        self.library?.playlists = [list1, list2]
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testFindPlaylist() {
+        let list1 = self.library?.playlists[0]
+        XCTAssertEqual(list1?.id, self.library?.findPlaylist(named: "List 1")?.id)
+        let list2 = self.library?.playlists[1]
+        XCTAssertEqual(list2?.id, self.library?.findPlaylist(named: "List 2")?.id)
+        XCTAssertNil(self.library?.findPlaylist(named: "Not Present"))
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
 
-class TestLibrary: Library {    
+class TestLibrary: Library {
     typealias PlaylistType = TestPlaylist
     var artists: [Artist] = []
     var playlists: [TestPlaylist] = []
