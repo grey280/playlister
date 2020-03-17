@@ -31,7 +31,7 @@ let package = Package(
             dependencies: ["Files", "SQLite"]
         ),
         .testTarget(
-            name: "PlaylisterTests",
+            name: "LibPlaylisterTests",
             dependencies: ["LibPlaylister"]),
     ]
 )
