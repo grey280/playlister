@@ -1,4 +1,4 @@
-name: LibPlaylisterTests
+name: Tests
 
 on:
   push:
