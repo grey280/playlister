@@ -23,7 +23,7 @@ jobs:
     - name: Swift Version
       run: swift --version
     - name: SQLite3
-      run: sudo apt-get update && sudo apt-get install sqlite3
+      run: apt-get update && apt-get install sqlite3
     - name: Debug Build
       run: swift build -v -c debug
     - name: Debug Test
