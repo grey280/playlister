@@ -1,7 +1,8 @@
 import XCTest
 
-import PlaylisterTests
+import LibPlaylisterTests
 
 var tests = [XCTestCaseEntry]()
-tests += PlaylisterTests.allTests()
+tests += LibraryTests.allTests()
+tests += HelperTests.allTests()
 XCTMain(tests)
