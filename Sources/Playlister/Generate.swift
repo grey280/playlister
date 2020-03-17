@@ -20,6 +20,7 @@ struct Generate: ParsableCommand {
     @Option(name: .long, default: "\"Automated update\"", help: "Commit message to use when in git mode.") var commitMessage: String
     
     func run() throws {
+        #if os(macOS)
         let library = try MusicLibrary()
         let didExist = Folder.current.containsSubfolder(named: "playlists")
         let rootFolder = try Folder.current.createSubfolderIfNeeded(at: "playlists")
@@ -42,9 +43,13 @@ struct Generate: ParsableCommand {
             let _ = try? shellOut(to: "git", arguments: ["commit", "-m", commitMessage], at: rootFolder.path)
             let _ = try? shellOut(to: "git", arguments: ["push"], at: rootFolder.path)
         }
+        #else
+        throw RuntimeError("Unsupported operating system!")
+        #endif
     }
 }
 
+#if os(macOS)
 fileprivate extension Playlist {
     func printPlaylist(in folder: Folder, ratingFormatter: RatingFormatter?, linkStore: LinkStore?) throws {
         if isParent {
@@ -62,3 +67,4 @@ fileprivate extension Playlist {
         }
     }
 }
+#endif

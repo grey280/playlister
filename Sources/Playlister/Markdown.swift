@@ -18,6 +18,7 @@ struct Markdown: ParsableCommand {
     @Flag(name: [.long, .customShort("l")]) var includeLinks: Bool
     
     func run() throws {
+        #if os(macOS)
         let library = try MusicLibrary()
         guard let list = library.findPlaylist(named: playlistName) else {
             throw RuntimeError("Playlist not found.")
@@ -30,5 +31,8 @@ struct Markdown: ParsableCommand {
             throw RuntimeError("Unable to generate playlist body.")
         }
         try file.write(body)
+        #else
+        throw RuntimeError("Unsupported operating system!")
+        #endif   
     }
 }

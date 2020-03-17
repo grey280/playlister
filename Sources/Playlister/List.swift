@@ -14,12 +14,17 @@ struct List: ParsableCommand {
     @Flag(name: .shortAndLong, help: ArgumentHelp("Print in tree format")) var human: Bool
     
     func run() throws {
+        #if os(macOS)
         let library = try MusicLibrary()
         for playlist in library.playlists {
             printList(playlist, depth: 0, increasing: human)
         }
+        #else
+        throw RuntimeError(description: "Unsupported operating system!")
+        #endif
     }
     
+    #if os(macOS)
     func printList(_ list: MusicPlaylist, depth: Int, increasing: Bool){
         let result = "\(String(repeating: " ", count: depth)) \(list.name)"
         print(result)
@@ -28,4 +33,5 @@ struct List: ParsableCommand {
             printList(playlist, depth: newDepth, increasing: increasing)
         }
     }
+    #endif
 }

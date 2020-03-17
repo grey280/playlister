@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import iTunesLibrary
 import LibPlaylister
+#if os(macOS)
+import iTunesLibrary
 
 class MusicLibrary: Library {
     var artists: [Artist] {
@@ -134,3 +135,4 @@ class MusicAlbum: Album {
         origin = itunes
     }
 }
+#endif
