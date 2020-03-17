@@ -2,7 +2,7 @@ import XCTest
 import LibPlaylister
 import class Foundation.Bundle
 
-final class LibPlaylisterTests: XCTestCase {
+final class HelperTests: XCTestCase {
     func testMarkdownSafe() throws {
         let string1 = "F**k Collingwood"
         let string1safe = #"F\*\*k Collingwood"#
