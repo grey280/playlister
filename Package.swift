@@ -3,6 +3,13 @@
 
 import PackageDescription
 
+let linkerSettings: [LinkerSetting]?
+#if os(macOS)
+linkerSettings = [.linkedFramework("iTunesLibrary")]
+#else
+linkerSettings = nil
+#endif
+
 let package = Package(
     name: "Playlister",
     platforms: [
@@ -23,9 +30,8 @@ let package = Package(
         .target(
             name: "Playlister",
             dependencies: ["Files", "SQLite", "LibPlaylister", "ShellOut", .product(name: "ArgumentParser", package: "swift-argument-parser")],
-            linkerSettings: [
-                .linkedFramework("iTunesLibrary")
-            ]),
+            linkerSettings: linkerSettings
+        ),
         .target(
             name: "LibPlaylister",
             dependencies: ["Files", "SQLite"]
