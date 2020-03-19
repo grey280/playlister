@@ -94,6 +94,25 @@ class LibraryTests: XCTestCase {
         let store = TestLinkStore()
         XCTAssertEqual(#"[**Song Name** - Artist Name on *Album Name*](https://greypatterson.me/)"#, item.asMarkdown(usingLinkStore: store))
     }
+    
+    func testPlaylistAsMarkdown(){
+        let item = TestPlaylistItem()
+        item.title = "Song Name"
+        item.artist = TestArtist(id: 0, name: "Artist Name")
+        item.album = TestAlbum(id: 0, name: "Album Name")
+        let item2 = TestPlaylistItem()
+        item2.title = "Another Song"
+        let list = self.library?.playlists[0]
+        list?.items = [item, item2]
+        let result = "# \(list!.name.markdownSafe)\n\n\(item.asMarkdown())\n\n\(item2.asMarkdown())\n"
+        XCTAssertEqual(result, list!.asMarkdown())
+    }
+    
+    func testParentDoesNotPrint(){
+        let list = self.library?.playlists.filter { $0.isParent }.first
+        XCTAssertNotNil(list)
+        XCTAssertNil(list?.asMarkdown())
+    }
 }
 
 class TestLinkStore: LinkStore {
