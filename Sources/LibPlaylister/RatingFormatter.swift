@@ -24,12 +24,8 @@ public struct FiveStarRatingFormatter: RatingFormatter {
             rate = 100
         }
         rate = rate / 20
-        var unrate = 5 - rate
-        if unrate < 0 {
-            unrate = 0
-        }
         let yes = String(repeating: "★", count: rate)
-        let no = String(repeating: "☆", count: unrate)
+        let no = String(repeating: "☆", count: 5 - rate)
         return yes + no
     }
     
