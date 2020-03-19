@@ -30,7 +30,7 @@ public extension Playlist {
     /// - Parameters:
     ///   - ratingFormatter: `RatingFormatter` to use. If nil, does not print ratings.
     ///   - linkStore: `LinkStore` to use. If nil, does not include links.
-    func asMarkdown(ratingFormatter: RatingFormatter?, usingLinkStore linkStore: LinkStore? = nil) -> String? {
+    func asMarkdown(ratingFormatter: RatingFormatter? = nil, usingLinkStore linkStore: LinkStore? = nil) -> String? {
         if isParent {
             return nil
         }
@@ -46,7 +46,7 @@ extension PlaylistItem {
     /// - Parameters:
     ///   - ratingFormatter: `RatingFormatter` to use. If nil, does not print ratings.
     ///   - linkStore: `LinkStore` to use. If nil, does not include links.
-    func asMarkdown(ratingFormatter: RatingFormatter?, usingLinkStore linkStore: LinkStore?) -> String {
+    func asMarkdown(ratingFormatter: RatingFormatter? = nil, usingLinkStore linkStore: LinkStore? = nil) -> String {
         let artistName = artist?.name?.markdownSafe
         
         var result = "**\(title?.markdownSafe ?? "(Untitled item)")** - \(artistName ?? "Unknown artist")"
