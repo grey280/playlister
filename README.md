@@ -2,6 +2,8 @@
 
 A command-line tool for reading your iTunes/Music.app playlists.
 
+![Tests](https://github.com/grey280/Playlister/workflows/Tests/badge.svg)
+
 ## Features
 * `list`
 List all of your playlists. Optionally using a nice nesting format, to be easier to read.
