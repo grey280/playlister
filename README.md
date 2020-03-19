@@ -12,6 +12,15 @@ Spit out all your playlists as Markdown files, hierarchically-organized, in `./p
 * `db`
 Manage the database. For now, only includes a helper to wipe the whole thing; in the future, would like to add features for managing single entries.
 
+## Getting Started
+1. `git clone https://github.com/grey280/Playlister.git`
+2. `cd Playlister`
+3. `swift build -c release`
+4. `cp .build/release/playlister /usr/local/bin/playlister`
+5. `playlister --help`
+
+Note: depending on your environment, you may need to sign the `playlister` binary. To do so, use `codesign -s {the name of your Apple Development/Distribution certificate} .build/release/playlister` before step 4, above.
+
 ## Built on...
 * [John Sundell](https://www.swiftbysundell.com/articles/building-a-command-line-tool-using-the-swift-package-manager/)'s advice
 * [SQLite.swift](https://github.com/stephencelis/SQLite.swift)
