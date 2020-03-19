@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import LibPlaylister
+@testable import LibPlaylister
 
 class LibraryTests: XCTestCase {
     var library: TestLibrary?
@@ -48,6 +48,16 @@ class LibraryTests: XCTestCase {
         XCTAssert(parent?.isParent ?? false)
         let foundParent = self.library?.playlists.compactMap {$0.findParent(4) }.first
         XCTAssertNotNil(foundParent)
+        XCTAssertEqual(parent?.id, foundParent?.id)
+    }
+    
+    func testItemAsBasicMarkdown() {
+        let item = TestPlaylistItem()
+        item.title = "Song Name"
+        item.artist = TestArtist(id: 0, name: "Artist Name")
+        item.album = TestAlbum(id: 0, name: "Album Name")
+        let expectedResult = #"**Song Name** - Artist Name on *Album Name*"#
+        XCTAssertEqual(expectedResult, item.asMarkdown())
     }
 }
 
@@ -66,12 +76,12 @@ final class TestPlaylist: Playlist {
     var items: [PlaylistItem] = []
 }
 
-class TestArtist: Artist {
+struct TestArtist: Artist {
     var id: Int = 0
     var name: String?
 }
 
-class TestAlbum: Album {
+struct TestAlbum: Album {
     var id: Int = 0
     var name: String?
 }
