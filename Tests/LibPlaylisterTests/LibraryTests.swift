@@ -46,18 +46,21 @@ class LibraryTests: XCTestCase {
     func testParentRelationships() {
         let parent = self.library?.playlists[2]
         XCTAssert(parent?.isParent ?? false)
-        let foundParent = self.library?.playlists.compactMap {$0.findParent(4) }.first
-        XCTAssertNotNil(foundParent)
-        XCTAssertEqual(parent?.id, foundParent?.id)
+        let idToFind = 4
+        let found = self.library?.playlists.compactMap {$0.findPlaylist(idToFind) }.first
+        XCTAssertNotNil(found)
+        XCTAssertEqual(idToFind, found?.id)
     }
     
     func testItemAsBasicMarkdown() {
-        let item = TestPlaylistItem()
+        var item = TestPlaylistItem()
+        XCTAssertEqual(#"**(Untitled item)** - Unknown artist"#, item.asMarkdown())
         item.title = "Song Name"
+        XCTAssertEqual("**Song Name** - Unknown artist", item.asMarkdown())
         item.artist = TestArtist(id: 0, name: "Artist Name")
+        XCTAssertEqual(#"**Song Name** - Artist Name"#, item.asMarkdown())
         item.album = TestAlbum(id: 0, name: "Album Name")
-        let expectedResult = #"**Song Name** - Artist Name on *Album Name*"#
-        XCTAssertEqual(expectedResult, item.asMarkdown())
+        XCTAssertEqual(#"**Song Name** - Artist Name on *Album Name*"#, item.asMarkdown())
     }
 }
 
