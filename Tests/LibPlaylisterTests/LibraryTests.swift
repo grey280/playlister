@@ -53,7 +53,7 @@ class LibraryTests: XCTestCase {
     }
     
     func testItemAsBasicMarkdown() {
-        var item = TestPlaylistItem()
+        let item = TestPlaylistItem()
         XCTAssertEqual(#"**(Untitled item)** - Unknown artist"#, item.asMarkdown())
         item.title = "Song Name"
         XCTAssertEqual("**Song Name** - Unknown artist", item.asMarkdown())
@@ -61,6 +61,16 @@ class LibraryTests: XCTestCase {
         XCTAssertEqual(#"**Song Name** - Artist Name"#, item.asMarkdown())
         item.album = TestAlbum(id: 0, name: "Album Name")
         XCTAssertEqual(#"**Song Name** - Artist Name on *Album Name*"#, item.asMarkdown())
+    }
+    
+    func testFiveStar() {
+        let formatter = FiveStarRatingFormatter()
+        XCTAssertEqual("☆☆☆☆☆", formatter.format(0))
+        XCTAssertEqual("★★★★★", formatter.format(100))
+        XCTAssertEqual("★★★☆☆", formatter.format(60))
+        XCTAssertEqual("★★☆☆☆", formatter.format(59))
+        XCTAssertEqual("☆☆☆☆☆", formatter.format(-10))
+        XCTAssertEqual("★★★★★", formatter.format(1000))
     }
 }
 
