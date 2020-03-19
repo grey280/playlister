@@ -35,7 +35,7 @@ class MusicLibrary: Library {
         while (queue.count > 0){
             let playlist = queue.remove(at: 0)
             if let parentID = playlist.parentID{
-                if let parent = playlists.compactMap({$0.findParent(parentID.intValue)}).first{
+                if let parent = playlists.compactMap({$0.findPlaylist(parentID.intValue)}).first{
                     parent.children.append(MusicPlaylist(itunes: playlist))
                 } else {
                     queue.append(playlist)

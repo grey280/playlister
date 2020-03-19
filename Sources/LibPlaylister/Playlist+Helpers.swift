@@ -12,11 +12,11 @@ public extension Playlist {
         children.count > 0
     }
     
-    func findParent(_ of: Self.ID) -> Self?{
-        if (id == of){
+    func findPlaylist(_ id: Self.ID) -> Self?{
+        if (self.id == id){
             return self
         }
-        return children.compactMap({ $0.findParent(of)}).first
+        return children.compactMap({ $0.findPlaylist(id)}).first
     }
     
     func findPlaylist(named: String) -> Self? {
