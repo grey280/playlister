@@ -46,6 +46,8 @@ class LibraryTests: XCTestCase {
     func testParentRelationships() {
         let parent = self.library?.playlists[2]
         XCTAssert(parent?.isParent ?? false)
+        let foundParent = self.library?.playlists.compactMap {$0.findParent(4) }.first
+        XCTAssertNotNil(foundParent)
     }
 }
 
