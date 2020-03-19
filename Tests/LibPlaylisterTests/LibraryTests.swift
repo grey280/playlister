@@ -72,6 +72,19 @@ class LibraryTests: XCTestCase {
         XCTAssertEqual("☆☆☆☆☆", formatter.format(-10))
         XCTAssertEqual("★★★★★", formatter.format(1000))
     }
+    
+    func testItemAsRatedMarkdown() {
+        let item = TestPlaylistItem()
+        item.title = "Song Name"
+        item.artist = TestArtist(id: 0, name: "Artist Name")
+        item.album = TestAlbum(id: 0, name: "Album Name")
+        let formatter = FiveStarRatingFormatter()
+        XCTAssertEqual(#"**Song Name** - Artist Name on *Album Name* (☆☆☆☆☆)"#, item.asMarkdown(ratingFormatter: formatter))
+        item.rating = 0
+        XCTAssertEqual(#"**Song Name** - Artist Name on *Album Name* (☆☆☆☆☆)"#, item.asMarkdown(ratingFormatter: formatter))
+        item.rating = 100
+        XCTAssertEqual(#"**Song Name** - Artist Name on *Album Name* (★★★★★)"#, item.asMarkdown(ratingFormatter: formatter))
+    }
 }
 
 class TestLibrary: Library {
