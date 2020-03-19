@@ -85,6 +85,21 @@ class LibraryTests: XCTestCase {
         item.rating = 100
         XCTAssertEqual(#"**Song Name** - Artist Name on *Album Name* (★★★★★)"#, item.asMarkdown(ratingFormatter: formatter))
     }
+    
+    func testItemWithLinks() {
+        let item = TestPlaylistItem()
+        item.title = "Song Name"
+        item.artist = TestArtist(id: 0, name: "Artist Name")
+        item.album = TestAlbum(id: 0, name: "Album Name")
+        let store = TestLinkStore()
+        XCTAssertEqual(#"[**Song Name** - Artist Name on *Album Name*](https://greypatterson.me/)"#, item.asMarkdown(usingLinkStore: store))
+    }
+}
+
+class TestLinkStore: LinkStore {
+    func link(for: PlaylistItem) throws -> URL? {
+        URL(string: "https://greypatterson.me/")
+    }
 }
 
 class TestLibrary: Library {
