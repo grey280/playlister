@@ -20,7 +20,17 @@ class LibraryTests: XCTestCase {
         let list2 = TestPlaylist()
         list2.name = "List 2"
         list2.id = 2
-        self.library?.playlists = [list1, list2]
+        let parentList = TestPlaylist()
+        parentList.name = "Parent"
+        parentList.id = 3
+        let child1 = TestPlaylist()
+        child1.name = "Child 1"
+        child1.id = 4
+        let child2 = TestPlaylist()
+        child2.name = "Child 2"
+        child2.id = 5
+        parentList.children = [child1, child2]
+        self.library?.playlists = [list1, list2, parentList]
     }
 
     func testFindPlaylist() {
@@ -29,6 +39,13 @@ class LibraryTests: XCTestCase {
         let list2 = self.library?.playlists[1]
         XCTAssertEqual(list2?.id, self.library?.findPlaylist(named: "List 2")?.id)
         XCTAssertNil(self.library?.findPlaylist(named: "Not Present"))
+        let child1 = self.library?.playlists[2].children[0]
+        XCTAssertEqual(child1?.id, self.library?.findPlaylist(named: "Child 1")?.id)
+    }
+    
+    func testParentRelationships() {
+        let parent = self.library?.playlists[2]
+        XCTAssert(parent?.isParent ?? false)
     }
 }
 
