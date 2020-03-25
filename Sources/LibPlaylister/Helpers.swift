@@ -9,7 +9,10 @@ import Foundation
 
 extension String{
     public var markdownSafe: String{
-        return self.replacingOccurrences(of: "*", with: "\\*").replacingOccurrences(of: "[", with: "\\[").replacingOccurrences(of: "]", with: "\\]")
+        return self
+            .replacingOccurrences(of: "*", with: #"\*"#)
+            .replacingOccurrences(of: "[", with: #"\["#)
+            .replacingOccurrences(of: "]", with: #"\]"#)
     }
 }
 
