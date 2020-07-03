@@ -33,6 +33,6 @@ struct Markdown: ParsableCommand {
         try file.write(body)
         #else
         throw RuntimeError("Unsupported operating system!")
-        #endif   
+        #endif
     }
 }
