@@ -119,6 +119,10 @@ class TestLinkStore: LinkStore {
     func link(for: PlaylistItem) throws -> URL? {
         URL(string: "https://greypatterson.me/")
     }
+    
+    func link(for: PlaylistItem, url: URL) throws {
+        // no-op
+    }
 }
 
 class TestLibrary: Library {
