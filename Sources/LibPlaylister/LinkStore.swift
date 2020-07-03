@@ -8,4 +8,6 @@ import Foundation
 
 public protocol LinkStore {
     func link(for: PlaylistItem) throws -> URL?
+    
+    func link(for: PlaylistItem, url: URL) throws 
 }
