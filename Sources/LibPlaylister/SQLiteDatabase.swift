@@ -85,4 +85,21 @@ extension SQLiteDatabase: LinkStore{
         }
         return nil
     }
+    
+    public func link(for item: PlaylistItem, url: URL) throws {
+        guard let db = database else {
+            throw RuntimeError("Unable to connect to links database.")
+        }
+        let table = Table("links")
+        let id = Expression<Int>("id")
+        let link = Expression<URL?>("link")
+        
+        if let count = try? database.scalar(table.filter(id == item.id).count), count > 0 {
+            let update = table.filter(id == item.id).update(link <- url)
+            try db.run(update)
+        } else {
+            let insert = table.insert(id <- item.id, link <- url)
+            try db.run(insert)
+        }
+    }
 }

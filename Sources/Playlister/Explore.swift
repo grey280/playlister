@@ -14,7 +14,7 @@ struct Explore: ParsableCommand {
     static var configuration = CommandConfiguration(
         commandName: "explore",
         abstract: "Explore your library",
-        subcommands: [ArtistIncome.self]
+        subcommands: [ArtistIncome.self, SongIDs.self]
     )
 }
 
@@ -51,4 +51,23 @@ struct ArtistIncome: ParsableCommand {
             .reduce(0, +)
     }
     #endif
+}
+
+struct SongIDs: ParsableCommand {
+    static var configuration: CommandConfiguration = CommandConfiguration(commandName: "id", abstract: "See the song IDs of every song in a playlist")
+    
+    @Argument() var playlistName: String
+    
+    func run() throws {
+        #if os(macOS)
+        let library = try MusicLibrary()
+        guard let list = library.findPlaylist(named: playlistName) else {
+            throw RuntimeError("Playlist not found.")
+        }
+        let result = list.items.map { "\($0.title ?? "Unknown Title") by \($0.artist?.name ?? "Unknown Artist") - [\($0.id)]"}.joined(separator: "\n")
+        print(result)
+        #else
+        throw RuntimeError("Unsupported operating system!")
+        #endif
+    }
 }
