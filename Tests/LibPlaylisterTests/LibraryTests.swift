@@ -116,8 +116,8 @@ class LibraryTests: XCTestCase {
 }
 
 class TestLinkStore: LinkStore {
-    func link(for: PlaylistItem) throws -> URL? {
-        URL(string: "https://greypatterson.me/")
+    func link(for: PlaylistItem) throws -> URLComponents? {
+        URLComponents(string: "https://greypatterson.me")
     }
     
     func link(for: PlaylistItem, url: URL) throws {

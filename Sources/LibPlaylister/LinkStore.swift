@@ -9,7 +9,7 @@ import Foundation
 public protocol LinkStore {
     /// Return a URL (possibly interactively) for an item
     /// - Parameter for: item to get the link
-    func link(for: PlaylistItem) throws -> URL?
+    func link(for: PlaylistItem) throws -> URLComponents?
     
     
     /// Update (or set) the link for an item
