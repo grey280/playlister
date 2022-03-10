@@ -30,12 +30,12 @@ public extension Playlist {
     /// - Parameters:
     ///   - ratingFormatter: `RatingFormatter` to use. If nil, does not print ratings.
     ///   - linkStore: `LinkStore` to use. If nil, does not include links.
-    func asMarkdown(ratingFormatter: RatingFormatter? = nil, usingLinkStore linkStore: LinkStore? = nil) -> String? {
+    func asMarkdown(ratingFormatter: RatingFormatter? = nil, usingLinkStore linkStore: LinkStore? = nil, stripAffiliateTokens: Bool = false) -> String? {
         if isParent {
             return nil
         }
         let body = items.map { (item) -> String in
-            item.asMarkdown(ratingFormatter: ratingFormatter, usingLinkStore: linkStore)
+            item.asMarkdown(ratingFormatter: ratingFormatter, usingLinkStore: linkStore, stripAffiliateTokens: stripAffiliateTokens)
         }.joined(separator: "\n\n")
         return "# \(name.markdownSafe)\n\n\(body)\n"
     }
@@ -46,7 +46,7 @@ extension PlaylistItem {
     /// - Parameters:
     ///   - ratingFormatter: `RatingFormatter` to use. If nil, does not print ratings.
     ///   - linkStore: `LinkStore` to use. If nil, does not include links.
-    func asMarkdown(ratingFormatter: RatingFormatter? = nil, usingLinkStore linkStore: LinkStore? = nil) -> String {
+    func asMarkdown(ratingFormatter: RatingFormatter? = nil, usingLinkStore linkStore: LinkStore? = nil, stripAffiliateTokens: Bool = false) -> String {
         let artistName = artist?.name?.markdownSafe
         
         var result = "**\(title?.markdownSafe ?? "(Untitled item)")** - \(artistName ?? "Unknown artist")"
@@ -57,8 +57,14 @@ extension PlaylistItem {
             result = result + " (\(rateFormat.format(rating ?? 0)))"
         }
         if let store = linkStore {
-            if let url = try? store.link(for: self) {
-                result = "[\(result)](\(url.absoluteString))"
+            guard var url = try? store.link(for: self) else { return result }
+            if stripAffiliateTokens {
+                url.queryItems = url.queryItems?.filter({ item in
+                    item.name.localizedLowercase != "at"
+                })
+            }
+            if let urlString = url.string {
+                result = "[\(result)](\(urlString))"
             }
         }
         return result

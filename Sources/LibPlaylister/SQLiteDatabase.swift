@@ -58,7 +58,7 @@ extension URL: Value {
 }
 
 extension SQLiteDatabase: LinkStore{
-    public func link(for item: PlaylistItem) throws -> URL? {
+    public func link(for item: PlaylistItem) throws -> URLComponents? {
         guard let db = database else {
             throw RuntimeError("Unable to connect to links database.")
         }
@@ -68,7 +68,10 @@ extension SQLiteDatabase: LinkStore{
         if let row = try? database.prepare(table.filter(id == item.id).limit(1)).first(where: { (_) -> Bool in
             true
         }) {
-            return row[link]
+            if let baseURL = row[link] {
+                return URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
+            }
+            return nil
         } else if (interactive){
             var input: String?
             while (input == nil){
@@ -80,7 +83,10 @@ extension SQLiteDatabase: LinkStore{
                 let url: URL? = input == "" ? nil : URL(string: input!)
                 let insert = table.insert(id <- item.id, link <- url)
                 let _ = try? db.run(insert)
-                return url
+                if let asURL = url {
+                    return URLComponents(url: asURL, resolvingAgainstBaseURL: false)
+                }
+                return nil
             }
         }
         return nil
